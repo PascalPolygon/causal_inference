@@ -1,0 +1,2 @@
+More details in causal inferencing example. 
+More equations, when talking about confounding, intervention and some other terms like that, use detailed example to illustrate what you are tallking about. You want your notebook to show that you understand everything at a very granular level. It has to show that you could build this whole thing from scratch in fucking C or some shit.
