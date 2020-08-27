@@ -1,2 +1,113 @@
 More details in causal inferencing example. 
 More equations, when talking about confounding, intervention and some other terms like that, use detailed example to illustrate what you are tallking about. You want your notebook to show that you understand everything at a very granular level. It has to show that you could build this whole thing from scratch in fucking C or some shit.
+
+https://escholarship.org/content/qt9md8d0nm/qt9md8d0nm.pdf
+
+SCM lib: CausalGraphicalModel
+
+07/21/20 - Notes
+
+Structural Agnostic Modeling (SAM) paper: Adveserial learning of causal graphs(Semms pretty advanced)
+Paper: https://arxiv.org/pdf/1803.04929.pdf
+Github: https://github.com/Diviyan-Kalainathan/SAM
+
+Counter factual paper by Pearl: https://ftp.cs.ucla.edu/pub/stat_ser/r485.pdf
+
+
+Twins dataset (Binary treatment outcome on twins): (https://github.com/AMLab-Amsterdam/CEVAE/blob/master/datasets/TWINS/ReadmeTwins)
+- 11984 pairs of twins, 
+- 50 covariates
+- Some missing data
+Paper using dataset: Estimating Individual Treatment Effect Paper (https://arxiv.org/pdf/1606.03976.pdf)
+Paper discusses novel way of calculating Individual Treatment Effect (ITE) from observational data.
+THis paper also uses the Jobs dataset
+
+JOBS dataset (LaLonde 1986):
+The treatment is job training and the outcomes are income and employment
+status after training. The study
+includes 8 covariates such as age and education, as well
+as previous earnings.
+LaLonde experimental sample (297 treated, 425 control)
+
+Perfect Match paper: Infering counter factual outcome using neural networks (https://arxiv.org/pdf/1810.00656.pdf)
+Uses NEWs and IHDP dataset
+
+
+IHDP dataset:
+contains data from a
+randomised study on the impact of specialist visits on the cognitive development of children, and
+consists of 747 children with 25 covariates describing properties of the children and their mothers.
+Children that did not receive specialist visits were part of a control group. The outcomes were
+simulated using the NPCI package from [29]. The IHDP dataset is biased because the treatment
+groups had a biased subset of the treated population removed [1].
+
+07/22/2020
+Awesome causality: Resources related to causality (https://shubhanshu.com/awesome-causality/)
+
+NEWs dataset:
+consists of 5000 randomly sampled news articles from the NY Times corpus3. The
+News dataset contains data on the opinion of media consumers on news items. The 2 covariates are the new article (X) and the device is was read on (k)
+and we observe the reader's opinion (y)
+
+**Linked Causal Variational Autoencoder for Inferring Paired Spillover Effects Paper (seems reproducible->might be easily applicable to maintenance):
+Novel way for finding confounding in spill over effect (One event causing a resul in a seemingly unrelated siutation)
+Paper used Amazon dataset: over 42k unique reviews of items purchased on Amazon
+The paper studies causal effect of positve or negative reviews on product sales on Amazon.
+
+**Recommendations as Treatments: Debiasing Learning and Evaluation (seems reproducible): 
+Approach to handle selection bias in recommendation systems using causal inferencing methods.
+The authors consider that exposing a user to an item in a recommendation system is an intervention analogous to exposing a patient to a treatment in a
+medical study. Novel algorithms learns recommendation systems that outperforms the ones that igore selection bias
+The dataset used is MNAR(Missing Not At Random) dataset. Consists of ratings of self-selectec items and randomly selected items.
+
+From 07/27 meeting
+Take counterfactual paper that you kno works (A simple one)
+And try to replicate what they are doing with the AML dataset
+Paper shared by Nenad: http://jmlr.org/papers/volume12/shimizu11a/shimizu11a.pdf
+Explain methods for counterfatuals
+Intervention saying here is the speed of the rotor 
+What is the probability that a machine is going to fail for this bearing speed for example
+What would be the compound effect of 2 interventions. Sometimes one failure is not enough to determine the cause of the problem.
+Assume a stucture and work with that. Do not try to learn the model.
+Start documenting all this so that it can go directly in your thesis.
+
+08/18
+
+AML dataset
+dataset has 4 main sources
+
+- real-time telemetry data collected from machines,
+    date&time, machineId, volt, rot, pressure, vibration
+
+- error messages, (non failure)
+    date&time, machineId, errorId 
+
+- failure history (record of failures)
+    date&time, machineId
+
+- machine information such as type and age.
+    machineId, model, age
+
+Each one of these is a seperate file
+
+labelling is done by labeling all the feature records that fall into the 24 hours window before a failure as TRUE.
+The rest of the records are labeled as FALSE indicating, there is no failure within the next 24 hours.
+- Try to do the labeling on your own in python, to make sure you understand how the labeling works.
+
+Features falling into the window right before the cutoff will not be used in traininng. Because labels are 24hrs in advance on the dataset. 
+If we include that last window, the training data will know the failure status of the first window in the validation/test set. So we just won't include it.
+
+Inital model used is binary logistic regression.
+
+Because there are more FALSE labels than TRUE labels in the dataset due to the non-frequency of failures, The model might get biased towards predicting FALSE.
+We could oversample TRUE labels. But we will start by selecting and optimizing the right performance metric. We won't just look at accuracy, but also recall 
+
+Precision perf measure: Of the shoes classfied Nike, How many are actually Nike?
+Recall perf measure: Of the shoes that are actually Nike, How many are classified as Nike?
+                     Of the data that leads to failure, how many are classified to lead to failure?
+Recall = True Positive/(True positive + False negative)
+To optimize precision and recall at the same time, use F-beta measure
+
+Logistic regression vs linear regression: https://medium.com/@dhiraj8899/top-5-difference-between-linear-regression-and-logistic-regression-893f6470d7e0
+Linear regression: fit straight line in the data (linear relationship) -> use when output variable is continous
+logistic regression: fit cruve line in the data.  -> Use when output variable is discrete or binary
