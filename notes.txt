@@ -111,3 +111,68 @@ To optimize precision and recall at the same time, use F-beta measure
 Logistic regression vs linear regression: https://medium.com/@dhiraj8899/top-5-difference-between-linear-regression-and-logistic-regression-893f6470d7e0
 Linear regression: fit straight line in the data (linear relationship) -> use when output variable is continous
 logistic regression: fit cruve line in the data.  -> Use when output variable is discrete or binary
+
+08/29/2020 Meeting with Nenad
+
+- Errors might be causally related
+- Use causal inference lib to infer graph
+- Look at only model3 for example
+- Try to find simpson paradox in the data
+
+2 diff types of trains
+type A 
+type B 
+
+Look at overall population
+What is overall type errors over the population vs per machine vs by age (optinoal)
+
+THen you can say errors increase by age, or something like that
+
+What if we only use 1 supplier? only B not A (models in your case)
+
+What if I replace all machines with type be
+
+Look at matching (All kinds of matching read about them)
+
+- Take features put them in a vector do same for a different group (model1 compared to model3) find eucl dist that will tell you how similar a model1 machine is to a model3 machine for instance.
+
+- WHat is the difference between models in terms of errors
+fail/machine-type
+
+
+
+
+- fix 1 to be control, if I replace model1 with either 2 or 3, am I going to get better performance. 
+- Can I replace all of them with only one or mix an match 
+
+Plot 4 machines on time graph (errors/model)
+1 machine model for control and another for treatment(YOu don't have telemetry for this one)
+If I intervene on machines that are 5 years older what is going to be the number of errors in the 2 groups.
+Should I keep old machines, or replace with new machine model (for whom I do not have much data)
+
+NIce graphic of data processing how you go from raw data to feature data
+There is a time correlation connecting the feature dimension, make sure that you explain that and you have an understsanding of that
+Maybe later it will help make better sense of the data, because right now I am not taking time into account.
+Write small notebook detailing this to make sure you understand the assumptions.
+
+Fix is to widden data (learn about widdening data)
+
+Randomly split the data (use sklearn)
+It's always better to randomly split the data (to make sure you avoid any other biases)
+
+What is the imbalance in your data (False Vs True) in all of your sets 
+Might need to 
+
+Do a factor analysis of which covariates are important
+
+
+Write more in text to explain what the code is doing for Dr. Peter
+
+Look at links for score matching and balancing
+
+10/20/2020
+Moving forward with this.
+- Refresh what a backdoor is and how it relates to instruments
+- What is refuting a model in dowhy
+- read on how to test a model in the book
+- What should be your treatment, (age?)
